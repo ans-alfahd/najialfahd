@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>استعادة النسخة الاحتياطية</h2>
+<form method="post" enctype="multipart/form-data">
+  <div class="mb-3"><input class="form-control" type="file" name="backup" required></div>
+  <button class="btn btn-danger" type="submit">استعادة</button>
+</form>
+{% endblock %}

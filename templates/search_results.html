@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>نتائج البحث عن "{{ query }}"</h2>
+{% for name, results in data.items() %}
+<h4 class="mt-4">{{ name }}</h4>
+<table class="table table-striped">
+  <thead><tr>{% for h in results.headers %}<th>{{ h }}</th>{% endfor %}</tr></thead>
+  <tbody>
+  {% for row in results.rows %}
+    <tr>{% for h in results.headers %}<td>{{ row[h] }}</td>{% endfor %}</tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endfor %}
+{% endblock %}
