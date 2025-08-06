@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>الكتب الواردة</h2>
+<form method="post" class="row g-3 mb-3">
+  <input type="hidden" name="id" value="{{ book.id if book else '' }}">
+  <div class="col-md-2"><input class="form-control" name="number" placeholder="العدد" value="{{ book.number if book else '' }}" required></div>
+  <div class="col-md-2"><input class="form-control" name="subject" placeholder="موضوع الكتاب" value="{{ book.subject if book else '' }}" required></div>
+  <div class="col-md-2"><input class="form-control" name="entity" placeholder="الجهة" value="{{ book.entity if book else '' }}" required></div>
+  <div class="col-md-2"><input class="form-control" type="date" name="date" value="{{ book.date if book else '' }}" required></div>
+  <div class="col-md-2"><input class="form-control" name="related_name" placeholder="الاسم المرتبط" value="{{ book.related_name if book else '' }}" required></div>
+  <div class="col-md-2">
+    <select class="form-select" name="status" required>
+      {% set current = book.status if book else '' %}
+      <option value="تم الرد" {% if current=='تم الرد' %}selected{% endif %}>تم الرد</option>
+      <option value="لم يرد" {% if current=='لم يرد' %}selected{% endif %}>لم يرد</option>
+      <option value="تم الاطلاع" {% if current=='تم الاطلاع' %}selected{% endif %}>تم الاطلاع</option>
+      <option value="العمل به" {% if current=='العمل به' %}selected{% endif %}>العمل به</option>
+    </select>
+  </div>
+  <div class="col-md-2"><button class="btn btn-primary w-100" type="submit">{% if book %}تعديل{% else %}حفظ{% endif %}</button></div>
+  {% if book %}
+  <div class="col-md-2"><a class="btn btn-secondary w-100" href="{{ url_for('incoming_books') }}">إلغاء</a></div>
+  {% endif %}
+</form>
+<table class="table table-striped">
+  <thead><tr><th>#</th><th>العدد</th><th>الموضوع</th><th>الجهة</th><th>التاريخ</th><th>الاسم المرتبط</th><th>الحالة</th><th>إجراءات</th></tr></thead>
+  <tbody>
+    {% for b in books %}
+    <tr>
+      <td>{{ loop.index }}</td>
+      <td>{{ b.number }}</td>
+      <td>{{ b.subject }}</td>
+      <td>{{ b.entity }}</td>
+      <td>{{ b.date }}</td>
+      <td>{{ b.related_name }}</td>
+      <td>{{ b.status }}</td>
+      <td class="table-actions">
+        <a class="btn btn-sm btn-warning" href="{{ url_for('incoming_books', edit=b.id) }}">تعديل</a>
+        <a class="btn btn-sm btn-danger" href="{{ url_for('delete_incoming_book', id=b.id) }}">حذف</a>
+        <a class="btn btn-sm btn-secondary" target="_blank" href="{{ url_for('print_incoming_book', id=b.id) }}">طباعة</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<div class="mt-3">
+  <a class="btn btn-outline-secondary" target="_blank" href="{{ url_for('print_all', table='incoming_books') }}">طباعة الكل</a>
+  <a class="btn btn-outline-success" href="{{ url_for('export_table', table='incoming_books') }}">تصدير</a>
+  <a class="btn btn-outline-primary" href="{{ url_for('import_table_form', table='incoming_books') }}">استيراد</a>
+</div>
+{% endblock %}

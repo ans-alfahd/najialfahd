@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>الوثائق الصادرة</h2>
+<form method="post" class="row g-3 mb-3">
+  <input type="hidden" name="id" value="{{ doc.id if doc else '' }}">
+  <div class="col-md-2"><input class="form-control" name="number" placeholder="العدد" value="{{ doc.number if doc else '' }}" required></div>
+  <div class="col-md-2"><input class="form-control" name="name" placeholder="الاسم" value="{{ doc.name if doc else '' }}" required></div>
+  <div class="col-md-2"><input class="form-control" name="doc_no" placeholder="رقم الوثيقة" value="{{ doc.doc_no if doc else '' }}" required></div>
+  <div class="col-md-2"><input class="form-control" type="date" name="date" value="{{ doc.date if doc else '' }}" required></div>
+  <div class="col-md-2"><input class="form-control" name="school" placeholder="المدرسة" value="{{ doc.school if doc else '' }}" required></div>
+  <div class="col-md-2"><input class="form-control" name="grade" placeholder="الصف" value="{{ doc.grade if doc else '' }}" required></div>
+  <div class="col-md-2"><button class="btn btn-primary w-100" type="submit">{% if doc %}تعديل{% else %}حفظ{% endif %}</button></div>
+  {% if doc %}
+  <div class="col-md-2"><a class="btn btn-secondary w-100" href="{{ url_for('outgoing_documents') }}">إلغاء</a></div>
+  {% endif %}
+</form>
+<table class="table table-striped">
+  <thead><tr><th>#</th><th>العدد</th><th>الاسم</th><th>رقم الوثيقة</th><th>التاريخ</th><th>المدرسة</th><th>الصف</th><th>إجراءات</th></tr></thead>
+  <tbody>
+    {% for d in docs %}
+    <tr>
+      <td>{{ loop.index }}</td>
+      <td>{{ d.number }}</td>
+      <td>{{ d.name }}</td>
+      <td>{{ d.doc_no }}</td>
+      <td>{{ d.date }}</td>
+      <td>{{ d.school }}</td>
+      <td>{{ d.grade }}</td>
+      <td class="table-actions">
+        <a class="btn btn-sm btn-warning" href="{{ url_for('outgoing_documents', edit=d.id) }}">تعديل</a>
+        <a class="btn btn-sm btn-danger" href="{{ url_for('delete_outgoing_document', id=d.id) }}">حذف</a>
+        <a class="btn btn-sm btn-secondary" target="_blank" href="{{ url_for('print_outgoing_document', id=d.id) }}">طباعة</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<div class="mt-3">
+  <a class="btn btn-outline-secondary" target="_blank" href="{{ url_for('print_all', table='outgoing_documents') }}">طباعة الكل</a>
+  <a class="btn btn-outline-success" href="{{ url_for('export_table', table='outgoing_documents') }}">تصدير</a>
+  <a class="btn btn-outline-primary" href="{{ url_for('import_table_form', table='outgoing_documents') }}">استيراد</a>
+</div>
+{% endblock %}

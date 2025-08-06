@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+  <div class="col-md-12 text-center mb-4">
+    <h1>الصفحة الرئيسية</h1>
+  </div>
+</div>
+<div class="row g-3">
+  <div class="col-md-3">
+    <a class="btn btn-primary w-100" href="{{ url_for('incoming_books') }}">الكتب الواردة</a>
+  </div>
+  <div class="col-md-3">
+    <a class="btn btn-secondary w-100" href="{{ url_for('outgoing_books') }}">الكتب الصادرة</a>
+  </div>
+  <div class="col-md-3">
+    <a class="btn btn-success w-100" href="{{ url_for('outgoing_documents') }}">الوثائق الصادرة</a>
+  </div>
+  <div class="col-md-3">
+    <a class="btn btn-warning w-100" href="{{ url_for('incoming_documents') }}">الوثائق الواردة</a>
+  </div>
+</div>
+<hr>
+<div class="row g-3 mt-3">
+  <div class="col-md-3"><a class="btn btn-outline-primary w-100" href="{{ url_for('backup') }}">نسخ احتياطي</a></div>
+  <div class="col-md-3"><a class="btn btn-outline-danger w-100" href="{{ url_for('restore_form') }}">استعادة</a></div>
+  <div class="col-md-3"><a class="btn btn-outline-info w-100" href="#">مسح ضوئي</a></div>
+  <div class="col-md-3"><a class="btn btn-outline-dark w-100" href="#">إجراءات سريعة</a></div>
+</div>
+{% endblock %}
