@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>جدول الحصص الأسبوعي</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="page-header">
+      <div class="header-content">
+        <h1>لوحة تنظيم جدول الحصص الأسبوعي</h1>
+        <p>
+          استخدم الأدوات التالية لإعداد جدول الحصص لجميع صفوف المرحلة الابتدائية
+          من الأول إلى السادس مع شعبتي (أ) و(ب) لكل صف.
+        </p>
+      </div>
+    </header>
+
+    <main>
+      <section class="management-section">
+        <div class="panel subjects-panel">
+          <h2>إدارة المواد</h2>
+          <p class="panel-description">
+            أضف المواد الدراسية المتاحة لاستخدامها عند توزيع الحصص.
+          </p>
+          <form id="subjectForm" class="inline-form" novalidate>
+            <label class="visually-hidden" for="subjectInput">اسم المادة</label>
+            <input
+              id="subjectInput"
+              type="text"
+              placeholder="مثال: اللغة العربية"
+              autocomplete="off"
+              required
+            />
+            <button type="submit">إضافة مادة</button>
+          </form>
+          <div id="subjectFeedback" class="form-feedback" aria-live="polite"></div>
+          <div id="subjectList" class="tag-list" aria-live="polite"></div>
+        </div>
+
+        <div class="panel teachers-panel">
+          <h2>إدارة المعلمين</h2>
+          <p class="panel-description">
+            أضف أسماء المعلمين لتسهيل تعيين كل حصة للمعلم المناسب.
+          </p>
+          <form id="teacherForm" class="inline-form" novalidate>
+            <label class="visually-hidden" for="teacherInput">اسم المعلم</label>
+            <input
+              id="teacherInput"
+              type="text"
+              placeholder="مثال: أ. أحمد العلي"
+              autocomplete="off"
+              required
+            />
+            <button type="submit">إضافة معلم</button>
+          </form>
+          <div id="teacherFeedback" class="form-feedback" aria-live="polite"></div>
+          <div id="teacherList" class="tag-list" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section class="schedule-section">
+        <div class="section-header">
+          <h2>الجدول الأسبوعي</h2>
+          <p>
+            يظهر الجانب العمودي أيام الأسبوع والحصص من 1 إلى 6، بينما يمثل
+            الجانب الأفقي الصفوف من الأول إلى السادس مع شعبتي (أ) و(ب) لكل صف.
+            اضغط على زر <strong>إضافة حصة</strong> داخل أي خانة لإسناد مادة ومعلم
+            لتلك الحصة.
+          </p>
+        </div>
+
+        <div class="table-wrapper">
+          <table id="scheduleTable" aria-describedby="scheduleDescription">
+            <caption id="scheduleDescription">
+              جدول زمني تفاعلي لإسناد الحصص الدراسية بحسب اليوم والصف والشعبة.
+            </caption>
+          </table>
+        </div>
+
+        <div id="scheduleFeedback" class="schedule-feedback" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <div id="modalBackdrop" class="modal-backdrop hidden" tabindex="-1"></div>
+    <section
+      id="lessonModal"
+      class="modal hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="lessonModalTitle"
+    >
+      <div class="modal-content">
+        <header class="modal-header">
+          <h2 id="lessonModalTitle">إضافة حصة</h2>
+          <button type="button" class="modal-close" aria-label="إغلاق النافذة">
+            ×
+          </button>
+        </header>
+
+        <p id="slotSummary" class="slot-summary"></p>
+
+        <form id="lessonForm" class="modal-form">
+          <div class="form-field">
+            <label for="subjectSelect">المادة</label>
+            <select id="subjectSelect" required></select>
+          </div>
+
+          <div class="form-field">
+            <label for="teacherSelect">المعلم</label>
+            <select id="teacherSelect" required></select>
+          </div>
+
+          <div class="form-field">
+            <label for="noteInput">ملاحظات (اختياري)</label>
+            <textarea
+              id="noteInput"
+              rows="2"
+              placeholder="مثال: قاعة العلوم أو ملاحظات أخرى"
+            ></textarea>
+          </div>
+
+          <footer class="modal-actions">
+            <button type="button" id="lessonCancelButton" class="secondary-button">
+              إلغاء
+            </button>
+            <button type="submit" id="lessonSubmitButton">حفظ الحصة</button>
+          </footer>
+        </form>
+      </div>
+    </section>
+
+    <script src="script.js" defer></script>
+  </body>
+</html>
